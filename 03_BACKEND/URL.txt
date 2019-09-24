@@ -1,0 +1,1 @@
+https://sleepingwebservices.azurewebsites.net/swagger/index.html
