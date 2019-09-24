@@ -1,0 +1,55 @@
+
+<ion-header *ngIf="!loading">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+        <ion-menu-button color="primary" menu="first"></ion-menu-button>
+    </ion-buttons>
+      <ion-title >INICIO - SLEEPING.COM</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content style="overflow-y: auto;width:auto;" *ngIf="!loading">
+        <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+                <ion-refresher-content></ion-refresher-content>
+              </ion-refresher>
+      <div style="background-color: #D5E8E8;">
+        <div>&nbsp;</div>
+        <ion-slides pager="true">
+            <ion-slide *ngFor="let slide of slides">
+                <img [src]="slide.img">
+            </ion-slide>
+        </ion-slides>
+        <div>&nbsp;</div>
+    </div>
+    <ion-card *ngFor="let serv of lstServicios" (click)="getDetail(serv)" style="cursor: pointer">
+            <ion-card-header>
+                <ion-card-title>{{serv.descServicio}}</ion-card-title>     
+            </ion-card-header>
+          
+            <ion-card-content>                    
+              Cómodo servicio para aquellas personas que necesitan distraerse en su tiempo
+              de descanso en el trabajo.
+              <ion-item>
+                    <ion-icon style="margin-right:5%;" name="cash"></ion-icon>
+                    <ion-label style="margin-right:3%;">Precio: </ion-label>
+                    <ion-label>{{serv.precioServicio | currency:'S/. '}}</ion-label>
+              </ion-item>
+              <ion-item>
+                    <ion-icon style="margin-right:5%;" name="apps"></ion-icon>
+                    <ion-label style="margin-right:3%;">Cantidad: </ion-label>
+                    <ion-label>{{serv.cantServicio}}</ion-label>
+              </ion-item>
+              <ion-item>
+                    <ion-icon style="margin-right:5%;" name="calendar"></ion-icon>
+                    <ion-label style="margin-right:3%;">Disponibilidad: </ion-label>
+                    <ion-label>{{serv.inicioDisponible +' - '+ serv.finDisponible}}</ion-label>
+              </ion-item>
+            </ion-card-content>
+    </ion-card>
+</ion-content>
+<ion-content *ngIf="loading" class="content-loading">
+        <div style="text-align: center;margin-top: 50%;"><img src="assets/images/icon_original.png"></div>
+        <ion-progress-bar color="primary" type="indeterminate" style="width: 63%;margin: 0 20% 20% 20%;"></ion-progress-bar>
+</ion-content>
+  
+

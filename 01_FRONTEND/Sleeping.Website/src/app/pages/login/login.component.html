@@ -1,0 +1,84 @@
+<div class="card card-block login-card" *ngIf="!changeRecoveryLogin && !changePasswordLogin" style="background-color: #03A54C;opacity:0.9;box-shadow: 1px 3px 19px 6px;margin-top:5%">
+    <div style="margin:20px;text-align: center"><img src="assets/images/icon_original.png"></div>
+  <div style="text-align: center">
+    <h3 class="form-label btn-primary" style="color:white !important;height: 50px;line-height: 50px;">Bienvenido a sleeping.com</h3>    
+  </div>
+  <div class="form-group" >
+    <form #loginForm="ngForm">
+      <div class="input-group">
+        <span class="input-group-addon addon-left" id="username">
+          <i class="fa fa-user fa-fw"></i>
+        </span>
+        <input class="form-control with-primary-addon"style="background-color:#F2F2F2;" placeholder="INGRESE CORREO" type="text" name="usuario" ngModel (keyup)="valLogin()" maxlength="50">
+      </div>
+      <div class="input-group">
+        <span class="input-group-addon addon-left"  id="password">
+          <i class="fa fa-lock fa-fw"></i>
+        </span>
+        <input class="form-control with-primary-addon" style="background-color:#F2F2F2;" placeholder="INGRESE CONTRASEÑA" type="password" name="password" 
+        ngModel (keyup)="valLogin()" maxlength="10">
+      </div>
+      <button class="btn btn-lg btn-primary" (click)="getUserLogin()" [disabled]="btnLogin">INGRESAR</button>      
+        <span>&nbsp;</span>
+        <span class="form-control" style="border: 0px solid white;text-align: center;">Olvidaste tu contraseña por favor ingresa <a (click)="RecoverPassword()" style="cursor: pointer;color:black;">AQUÍ</a></span>
+    </form>
+  </div>
+</div>
+
+<div class="card card-block login-card" *ngIf="changeRecoveryLogin && !changePasswordLogin" style="background-color: #03A54C;opacity:0.9;box-shadow: 1px 3px 19px 6px;margin-top:5%">
+    <div style="margin:20px;text-align: center"><img src="assets/images/icon_original.png"></div>
+  <div style="text-align: center">
+      <h3 class="form-label btn-primary" style="color:white !important;height: 50px;line-height: 50px;">¿No puedes iniciar sesión?</h3>    
+    <span style="color:white;">Si usted ya esta registrado en el sistema, por favor ingrese su correo electrónico para recuperar su contraseña.</span> 
+  </div>
+  <div class="form-group" >
+    <form #recoveryForm="ngForm">
+      <div class="input-group">
+        <span class="input-group-addon addon-left" id="username">
+          <i class="fa fa-user fa-fw"></i>
+        </span>
+        <input class="form-control with-primary-addon"style="background-color:#F2F2F2;" 
+               placeholder="INGRESE CORREO" type="text" name="correo" ngModel (keyup)="valEmail()" maxlength="50">
+      </div>
+      <button class="btn btn-lg btn-success" (click)="getRecoveryMethod()" [disabled]="btnRecovery">ENVIAR CORREO</button>      
+      <span>&nbsp;</span>
+      <button class="btn btn-lg btn-info" (click)="getBack()" >ATRÁS</button>  
+    </form>
+  </div>
+</div>
+
+<div class="card card-block login-card" *ngIf="!changeRecoveryLogin && changePasswordLogin" style="background-color: #03A54C;opacity:0.9;box-shadow: 1px 3px 19px 6px;margin-top:5%">
+    <div style="margin:20px;text-align: center"><img src="assets/images/icon_original.png"></div>
+  <div style="text-align: center">
+    <h3 class="form-label btn-primary" style="color:white !important;height: 50px;line-height: 50px;">Cambio de contraseña requerido</h3>   
+    <span style="color:white;">Se le ha generado una clave dinámica. Por favor actualice su contraseña antes de acceder al sistema.</span>  
+  </div>
+  <div class="form-group" >
+    <form #ChangePassWord="ngForm">
+      <div class="input-group">
+        <span class="input-group-addon addon-left"  id="password">
+          <i class="fa fa-lock fa-fw"></i>
+        </span>
+        <input class="form-control with-primary-addon" style="background-color:#F2F2F2;" (keyup)="validPasswords('old')"
+        placeholder="INGRESE ANTIGUA CONTRASEÑA" type="password" name="oldPassword" ngModel maxlength="10">
+      </div>
+      <div class="input-group">
+          <span class="input-group-addon addon-left"  id="password">
+            <i class="fa fa-lock fa-fw"></i>
+          </span>
+          <input class="form-control with-primary-addon" style="background-color:#F2F2F2;" (keyup)="validPasswords('new')"
+          placeholder="INGRESE NUEVA CONTRASEÑA" type="password" name="NewPassword" ngModel maxlength="10">
+        </div>
+      <div class="input-group">
+          <span class="input-group-addon addon-left"  id="password">
+            <i class="fa fa-lock fa-fw"></i>
+          </span>
+          <input class="form-control with-primary-addon" style="background-color:#F2F2F2;" 
+          placeholder="REPITA NUEVA CONTRASEÑA" type="password" name="NewPassConfirmation" ngModel (keyup)="validPasswords('renew')" maxlength="10">
+        </div>
+      <button class="btn btn-lg btn-primary" (click)="ValidChangePassword()" [disabled]="btnChangePsw">INGRESAR</button>      
+        <span>&nbsp;</span> 
+        <button class="btn btn-lg btn-info" (click)="getBack()" >ATRÁS</button>         
+    </form>
+  </div>
+</div>

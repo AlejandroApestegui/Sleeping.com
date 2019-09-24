@@ -1,0 +1,59 @@
+  <div class="row">
+    <div class="col-md-3 animated fadeIn">
+      <div class="card card-block tip-card">
+        <div class="tip-msg">
+          <h3>Seguidores</h3>
+          <span>118 / 251</span>
+        </div>
+        <button class="tip-ico tip-ico-primary">
+          <i class="fa fa-group fa-fw"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-3 animated fadeIn">
+      <div class="card card-block tip-card">
+        <div class="tip-msg">
+          <h3>Reservas</h3>
+          <span>10/250</span>
+        </div>
+        <button class="tip-ico tip-ico-info" (click)="redirectToControlReserva()">
+          <i class="fa fa-envelope-open fa-fw"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-3 animated fadeIn">
+      <div class="card card-block tip-card">
+        <div class="tip-msg">
+          <h3>Inmobiliaria</h3>
+          <span>Organiza tu alquiler.</span>
+        </div>
+        <button class="tip-ico tip-ico-success" (click)="redirectToForniture()">
+          <i class="fa fa-suitcase fa-fw"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-3 animated fadeIn">
+      <div class="card card-block tip-card">
+        <div class="tip-msg">
+          <h3>Comentarios</h3>
+          <span>20 comentarios</span>
+        </div>
+        <button class="tip-ico tip-ico-danger">
+          <i class="fa fa-commenting-o fa-fw"></i>
+        </button>
+      </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <card cardTitle='CLIENTES ACEPTADOS' isCollapse="false">
+      <div echarts [options]="BarClientesAceptados" [loading]="showloading" theme="dark" class="demo-chart"></div>
+    </card>
+  </div>
+  <div class="col-md-6">
+      <card cardTitle='CLIENTES RECHAZADOS' isCollapse="false">
+        <div echarts [options]="BarClientesRechazados" [loading]="showloading" theme="dark" class="demo-chart"></div>
+      </card>
+  </div>
+</div>    
+  

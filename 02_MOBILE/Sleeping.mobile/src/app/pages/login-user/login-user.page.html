@@ -1,0 +1,87 @@
+
+<ion-content  style="--background: rgba(201,245,179,1);
+--background: -moz-linear-gradient(-45deg, rgba(201,245,179,1) 0%, rgba(22,222,0,1) 100%);
+--background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(201,245,179,1)), color-stop(100%, rgba(22,222,0,1)));
+--background: -webkit-linear-gradient(-45deg, rgba(201,245,179,1) 0%, rgba(22,222,0,1) 100%);
+--background: -o-linear-gradient(-45deg, rgba(201,245,179,1) 0%, rgba(22,222,0,1) 100%);
+--background: -ms-linear-gradient(-45deg, rgba(201,245,179,1) 0%, rgba(22,222,0,1) 100%);
+--background: linear-gradient(135deg, rgba(201,245,179,1) 0%, rgba(22,222,0,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c9f5b3', endColorstr='#16de00', GradientType=1 );">
+  <div style="width: 100%;height: 100%;" class="green" *ngIf="!flgNewUser">
+  <div style="text-align: center;"><img src="assets/images/icon_original.png"></div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title style="padding: 10px;text-align: center;color: white;" class="yellow-back">Bienvenido a Sleeping.com</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <form #loginForm="ngForm">
+          <ion-item style="margin-bottom: 15px;" class="input-fields">
+            <ion-icon name="person" slot="start"></ion-icon>
+            <ion-input placeholder="INGRESE CORREO" style="font-size: 13px;" name="usuario" ngModel (keyup)="valLogin()" maxlength="50"></ion-input>        
+          </ion-item>
+          <ion-item style="margin-bottom: 15px;" class="input-fields">
+            <ion-icon name="lock" slot="start"></ion-icon>
+            <ion-input type="password" placeholder="INGRESE CONTRASEÑA" style="font-size: 13px;" name="password" ngModel (keyup)="valLogin()" maxlength="10"></ion-input>        
+          </ion-item>
+            <ion-button expand="full" style="margin-bottom: 15px;font-weight: bold;" class="login-button" (click)="getUserLogin()" [disabled]="btnLogin">INGRESAR</ion-button>     
+            <ion-button expand="full" style="margin-bottom: 15px;font-weight: bold;" class="register-button" (click)="getNewUser()">REGISTRARSE</ion-button>     
+           <!-- <div style="text-align: center;margin-bottom:15px;"><a href="#">¿Olvidaste tu contraseña?</a> </div>  -->
+      </form>
+    </ion-card-content>
+  </ion-card>
+</div>
+<div style="width: 100%;height: auto;" class="newUser" *ngIf="flgNewUser">
+    <div style="text-align: center;">&nbsp;</div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title style="padding: 10px;text-align: center;color: white;" class="yellow-back">Nuevo ususario</ion-card-title>
+      </ion-card-header>
+    
+      <ion-card-content>
+        <form #registerForm="ngForm">
+            <ion-item style="margin-bottom: 15px;" class="input-fields">
+                <ion-icon name="contact" slot="start"></ion-icon>
+                <ion-input placeholder="INGRESE NOMBRES" 
+                style="font-size: 13px;text-transform: uppercase" name="usuName" ngModel maxlength="30" 
+                oninput="'this.value = this.value.toUpperCase()'" (keypress)="onlyforText($event)"></ion-input>        
+            </ion-item>
+            <ion-item style="margin-bottom: 15px;" class="input-fields">
+                <ion-icon name="contacts" slot="start"></ion-icon>
+                <ion-input placeholder="INGRESE APELLIDOS" 
+                style="font-size: 13px;text-transform: uppercase" oninput="'this.value = this.value.toUpperCase()'" (keypress)="onlyforText($event)"
+                name="usuLastName" ngModel maxlength="50"></ion-input>        
+            </ion-item>
+            <ion-item style="margin-bottom: 15px;" class="input-fields">
+                <ion-icon name="list-box" slot="start"></ion-icon>
+                <ion-input placeholder="INGRESE SU DNI" style="font-size: 13px;" (keypress)="onlyNumberKey($event)"
+                name="usuDoc" ngModel maxlength="8"></ion-input>        
+            </ion-item>
+            <ion-item style="margin-bottom: 15px;" class="input-fields">
+              <ion-icon name="mail" slot="start"></ion-icon>
+              <ion-input placeholder="INGRESE CORREO" style="font-size: 13px;" name="usuario" ngModel maxlength="50"></ion-input>        
+            </ion-item>
+            <ion-item style="margin-bottom: 15px;" class="input-fields">
+              <ion-icon name="lock" slot="start"></ion-icon>
+              <ion-input type="password" placeholder="INGRESE CONTRASEÑA" style="font-size: 13px;" name="password" ngModel maxlength="10"></ion-input>        
+            </ion-item>
+            <ion-item style="margin-bottom: 15px;" class="input-fields">
+                <ion-icon name="home" slot="start"></ion-icon>
+                <ion-input placeholder="INGRESE DIRECCIÓN" style="font-size: 13px;text-transform: uppercase" oninput="'this.value = this.value.toUpperCase()'" name="usuDireccion" ngModel maxlength="50"></ion-input>        
+            </ion-item>
+            <ion-item style="margin-bottom: 15px;" class="input-fields">
+                <ion-icon name="briefcase" slot="start"></ion-icon>
+                <ion-input placeholder="INGRESE EMPRESA" style="font-size: 13px;text-transform: uppercase" oninput="'this.value = this.value.toUpperCase()'" name="usuEmpresa" ngModel maxlength="50"></ion-input>        
+            </ion-item>
+            <ion-item style="margin-bottom: 15px;" class="input-fields">
+                <ion-icon name="calendar" slot="start"></ion-icon> <ion-label style="font-size: 14px;">F. NACIMIENTO:</ion-label>               
+                <ion-datetime displayFormat="DD/MM/YYYY"  name="usuFecNac" ngModel></ion-datetime>                                     
+            </ion-item>              
+              <ion-button expand="full" style="margin-bottom: 15px;font-weight: bold;" class="register-button" (click)="RegistrarUsuario()">REGISTRARME</ion-button>                   
+              <ion-button expand="full" style="margin-bottom: 15px;font-weight: bold;" class="back-button" (click)="ReturnLogin()">ATRÁS</ion-button>                   
+        </form>
+      </ion-card-content>
+    </ion-card>
+    <div style="text-align: center;">&nbsp;</div>
+  </div>
+</ion-content>

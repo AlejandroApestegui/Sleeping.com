@@ -1,0 +1,146 @@
+<div class="col-md-12">
+    <card cardTitle="Filtrar por nombre">
+      <form #SearchForm="ngForm" class="form-group">
+      <div class="col-md-7">
+        <div class="col-md-2" style="margin:5px;">
+            <label for="example1" class="form-label" style="line-height: 2;">Accesorio:</label>
+        </div>
+        <div class="col-md-5" style="margin:5px">
+            <input type="text" class="form-control" name="accesoryName" ngModel id="example1" placeholder="Ingrese un accesorio">
+          </div>
+        <div class="col-md-2" style="margin:5px">
+          <button type="button"  (click)="getList()" class="btn btn-default"><i class="fa fa-search fa-fw"></i>&nbsp;BUSCAR</button>          
+        </div>
+        <div class="col-md-1" style="margin:5px">
+            <button type="button"  (click)="ResetSearch()" class="btn btn-icon btn-info">
+                <i class="fa fa-refresh fa-fw"></i>LIMPIAR
+            </button>     
+          </div>        
+
+      </div>
+      </form>
+    </card>
+</div>
+
+<div class="row">
+    <div class="col-md-2" style="margin:5px">
+        <button class="btn btn-lg btn-primary" (click)="openModal(newAccesory,'N','Nuevo','')"><i class="fa fa-plus-circle fa-fw"></i>AGREGAR ACCESORIO</button>        
+      </div>
+    <div class="col-md-12">
+      <card cardTitle="LISTADO DE ACCESORIOS">
+        <div style="width:100%;overflow-y: auto;">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>       
+              <th style="display: none;">usuario</th>       
+              <th><b>CODIGO SERVICIO</b></th>
+              <th>DESCRIPCIÓN SERVICIO</th>
+              <th>CANTIDAD</th>
+              <th>COSTO S/.</th>
+              <th>ESTADO</th>
+              <th>FECHA REGISTRO</th>
+              <th>DISP. INICIO</th>
+              <th>DISP. FIN</th>
+              <th style="display: none;">INTERVALO</th> 
+              <th>OPCIONES</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tableData | paginate: { id: 'pager', itemsPerPage: pageSize, currentPage: pageNumber};let index = index">
+              <td style="display:none;">{{item.idUsuario}}</td>
+              <td>{{item.idServicio}}</td>
+              <td>{{item.descServicio}}</td>
+              <td>{{item.cantServicio}}</td>
+              <td>{{item.precioServicio | currency:'S/. '}}</td>              
+              <td> <span class="label label-info">{{(item.estadoServicio === 0)?'INACTIVO':'ACTIVO'}}</span> </td>
+              <td> {{item.fecRegistro}} </td>
+              <td> {{item.inicioDisponible}} </td>
+              <td> {{item.finDisponible}} </td>
+              <td style="display:none;"> {{item.minIntervalo}} </td>
+              <td> <button (click)="openModal(newAccesory,'E',item,index)" class="btn btn-info">EDITAR</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+        <form class="pagination-wrapper">
+          <div class="form-group pages">
+            <pagination-controls class="my-pagination" id="pager" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+              autoHide="true" previousLabel="Prev" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+              screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+          </div>
+          <div class="form-group options pages">
+            <div class="input-group input-group-sm">
+              <select class="form-control" name="pageChangedName" [(ngModel)]="pageSize" (ngModelChange)="loadData()">
+                <option>1</option>
+                <option>5</option>
+                <option>10</option>
+                <option>20</option>
+                <option>50</option>
+              </select>
+              <span class="input-group-addon addon-right">Per Page</span>
+            </div>
+          </div>
+        </form>
+      </card>
+    </div>
+  </div>
+
+
+
+
+  <modal #newAccesory [closeOnEscape]="false" [closeOnOutsideClick]="false">
+      <modal-header style="background-color:#03a54c !important;">
+        <h3 style="text-align: center;color:white;"*ngIf="flagEVENT ==='AGREGAR'">NUEVO ACCESORIO <i class="fa fa-suitcase fa-fw"></i></h3>
+        <h3 style="text-align: center;color:white;" *ngIf="flagEVENT ==='EDITAR'">DATOS DEL ACCESORIO <i class="fa fa-suitcase fa-fw"></i></h3>
+      </modal-header>
+      <modal-content>
+          <div class="form-group">
+              <form #NewAccesoryForm="ngForm" class="form-group">
+              <label class="control-label" *ngIf="CODIGO_HIDDEN" style="margin:5px"><i class="fa fa-tag fa-fw"></i> CODIGO ACCESORIO:</label>
+              <label class="control-label" *ngIf="CODIGO_HIDDEN" style="margin:5px;width:100%"><b>{{newAccesoryCode}}</b></label>              
+
+              <label class="control-label" style="margin:5px;"><i class="fa fa-suitcase fa-fw"></i> NOMBRE ACCESORIO:</label>
+              <input type="text" class="form-control" placeholder="INGRESE EL NOMBRE DEL ACCESORIO" style="margin:5px;text-transform: uppercase" 
+              oninput="'this.value = this.value.toUpperCase()'"
+              name="accesoryName" ngModel maxlength="70" required>
+              
+              <label class="control-label" style="margin:5px"><i class="fa fa-cubes fa-fw"></i> CANTIDAD:</label>
+              <input type="text" class="form-control" placeholder="INGRESE LA CANTIDAD DEL ACCESORIO" style="margin:5px"
+                      (keypress)="onlyNumberKey($event)" pattern="[0-9]*$" required #prueba="ngModel"
+                      name="accesoryQuantity" ngModel maxlength= "2" (focusout)="getMethod($event.target.value)"
+                      (keyup)="ValCantidad($event.target.value)">
+              <span class="help-block sub-little-text"  style="margin:5px" [ngClass]="{'colorCantidad': (validateCantidad === true)?true:false}">La cantidad máxima es de 10.</span>
+
+              <label class="control-label" style="margin:5px"><i class="fa fa-money fa-fw"></i> PRECIO:</label>
+              <input type="text" class="form-control form-control-sm" placeholder="INGRESE EL PRECIO DEL ACCESORIO" 
+              (focusout)="formatPrecio($event.target.value)" (keypress)="onlyNumberKey($event)" maxlength="2" (focus)="getNumberPrecio()"
+              style="margin:5px"  name="accesoryPrice" ngModel required>
+
+              <label class="control-label" style="margin:5px"><i class="fa fa-calendar-check-o fa-fw"></i> H. DISPONIBILIDAD INICIO:</label>
+              <input type="time" class="form-control" placeholder="INGRESE LA DISPONIBILIDAD INICIAL" style="margin:5px"  name="accesoryDateIni" ngModel required>
+
+              <label class="control-label" style="margin:5px"><i class="fa fa-calendar-times-o fa-fw"></i> H. DISPONIBILIDAD FIN:</label>
+              <input type="time" class="form-control" placeholder="INGRESE LA DISPONIBILIDAD FINAL" style="margin:5px"  name="accesoryDateFin" ngModel required>
+
+              <label class="control-label" style="margin:5px"><i class="fa fa-exchange fa-fw"></i> INTERVALO DE RESERVA (EXPRESADO EN MINUTOS):</label>
+              <select  class="form-control" style="margin:5px"   name="accesoryInterval" ngModel [(ngModel)]="IntervalValue" required>
+                <option [value]="0">SELECCIONE</option>
+                <option [value]="item.id" *ngFor="let item of lstInterval">{{item.text}}</option>
+              </select>              
+
+              <label class="control-label" style="margin:5px"><i class="fa fa-rss fa-fw"></i> ESTADO:</label>
+              <div style="margin:5px">
+                <input class="checkbox checkbox-primary" type="checkbox" (change)="getFlag($event.target.checked)" id="color-checkbox2" [checked]="flagCHECKED">
+                <label class="check-label" for="color-checkbox2">{{flagIsActive}}</label>
+              </div>
+              </form>
+            </div>
+      </modal-content>
+      <modal-footer>
+        <button class="btn btn-success" (click)="addAccesory(newAccesory)" *ngIf="flagEVENT ==='AGREGAR'" [disabled]="validateCantidad"><i class="fa fa-check fa-fw" ></i>AGREGAR</button>
+        <button class="btn btn-success" (click)="editAccesory(newAccesory)"  *ngIf="flagEVENT ==='EDITAR'"><i class="fa fa-check fa-fw"></i>ACTUALIZAR</button>
+        <button class="btn btn-danger" (click)="closeModal(newAccesory)"><i class="fa fa-close fa-fw"></i>CANCELAR</button>
+      </modal-footer>
+    </modal>

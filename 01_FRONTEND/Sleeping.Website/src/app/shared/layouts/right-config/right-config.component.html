@@ -1,0 +1,47 @@
+<button class="config-switch" (click)="configToggle()">
+  <i class="fa fa-tasks" *ngIf="!isConfigToggle"></i>
+  <i class="fa fa-chevron-right" *ngIf="isConfigToggle"></i>
+</button>
+<div class="right-config-wrap" [ngClass]="{'right-config-wrap-on':isConfigToggle}">
+  <div class="config-header">
+    <h3 class="config-title">
+      <i class="fa fa-cogs"></i>
+      <span>Configuraciones</span>
+    </h3>
+    <p class="desc">Propiedad del usuario</p>
+  </div>
+  <ul class="config-content">
+    <li class="config-list" (click)="getChangePasswordRequest(PasswordRequest)">
+      <span><i class="fa fa-cog fa-fw"></i>&nbsp;Cambio de Contraseña</span>
+    </li>
+    <li class="config-list" (click)="returnLogin()">
+      <span><i class="fa fa-power-off fa-fw"></i>&nbsp;Cerrar sesión</span>
+    </li>
+  </ul>
+</div>
+
+<modal #PasswordRequest [closeOnEscape]="false" [closeOnOutsideClick]="false">
+  <modal-header style="background-color:#03a54c !important;">
+    <h3 style="text-align: center;color:white;">CAMBIO DE CONTRASEÑA <i class="fa fa-cog fa-fw"></i></h3>    
+  </modal-header>
+  
+  <modal-content>
+    <div class="form-group" >
+      <form #ChangePassWord="ngForm">
+          <label class="control-label" style="margin:5px"><i class="fa fa-lock fa-fw"></i> ANTIGUA CONTRASEÑA:</label>
+          <input type="password" class="form-control" placeholder="INGRESE ANTIGUA CONTRASEÑA" style="margin:5px"  (keyup)="validPasswords()"
+                 name="oldPassword" ngModel>
+          <label class="control-label" style="margin:5px"><i class="fa fa-lock fa-fw"></i> NUEVA CONTRASEÑA:</label>
+          <input type="password" class="form-control" placeholder="INGRESE NUEVA CONTRASEÑA" style="margin:5px"  (keyup)="validPasswords()"
+                 name="NewPassword" ngModel>
+          <label class="control-label" style="margin:5px"><i class="fa fa-lock fa-fw"></i> CONFIRMACIÓN NUEVA CONTRASEÑA:</label>
+          <input type="password" class="form-control" placeholder="REPITA NUEVA CONTRASEÑA" style="margin:5px"  (keyup)="validPasswords()"
+                 name="NewPassConfirmation" ngModel>        
+      </form>
+    </div>
+  </modal-content>
+  <modal-footer>
+    <button class="btn btn-lg btn-success" (click)="ValidChangePassword()" [disabled]="btnChangePsw">GUARDAR</button>    
+    <button class="btn btn-danger" (click)="closeModal(PasswordRequest)"><i class="fa fa-close fa-fw"></i>CANCELAR</button>
+  </modal-footer>
+</modal>

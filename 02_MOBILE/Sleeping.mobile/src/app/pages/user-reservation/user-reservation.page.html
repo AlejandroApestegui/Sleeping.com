@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+        <ion-menu-button color="primary" menu="first"></ion-menu-button>
+    </ion-buttons>
+      <ion-title>MIS RESERVAS</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+    <ion-card *ngFor="let serv of lstServicios" (click)="getDetail(serv)" style="cursor: pointer">
+        <ion-card-header style="background-color: #B3E5FC;">
+            <ion-card-title >{{serv.servicio.descServicio}}</ion-card-title>     
+        </ion-card-header>
+      
+        <ion-card-content>                    
+          <ion-item>
+                <ion-icon style="margin-right:5%;" name="cash"></ion-icon>
+                <ion-label style="margin-right:3%;">Precio: </ion-label>
+                <ion-label>{{serv.servicio.precioServicio | currency:'S/. '}}</ion-label>
+          </ion-item>
+          <ion-item>
+                <ion-icon style="margin-right:5%;" name="apps"></ion-icon>
+                <ion-label style="margin-right:3%;" >Estado: </ion-label>
+                <ion-label >{{serv.descEstado}}</ion-label>
+          </ion-item>
+          <ion-item>
+              <ion-icon style="margin-right:5%;" name="calendar"></ion-icon>
+              <ion-label style="margin-right:3%;">Fec. Reserva: </ion-label>
+              <ion-label>{{serv.reserva.fecha}}</ion-label>
+        </ion-item>
+          <ion-item>
+                <ion-icon style="margin-right:5%;" name="calendar"></ion-icon>
+                <ion-label style="margin-right:3%;">H. Reserva: </ion-label>
+                <ion-label>{{serv.reserva.desde +' - '+ serv.reserva.hasta}}</ion-label>
+          </ion-item>
+          <ion-button expand="full" *ngIf="serv.reserva.estado === 1" style="margin-bottom: 15px;font-weight: bold;" class="register-button" (click)="RegisterReserva()">PAGAR</ion-button>
+        </ion-card-content>
+</ion-card>
+</ion-content>

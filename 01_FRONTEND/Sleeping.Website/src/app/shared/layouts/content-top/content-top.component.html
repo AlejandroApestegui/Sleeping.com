@@ -1,0 +1,5 @@
+<div class="content-wrap">
+  <a routerLink="/pages/provider-index" *ngIf="routeTitle !== 'Inicio'" (click)="returnHome()">Inicio</a>
+  <i *ngIf="routeTitle !== 'Inicio'">/</i>
+  <span>{{routeTitle}}</span>
+</div>

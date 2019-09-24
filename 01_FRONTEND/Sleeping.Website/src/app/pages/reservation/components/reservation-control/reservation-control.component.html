@@ -1,0 +1,80 @@
+<div class="row">
+<div class="col-md-12">
+  <card cardTitle="Filtros de Reserva">
+    <form class="form-inline">
+      <label for="example1" class="form-label">Código de Solicitud:</label>
+      <input type="text" class="form-control" id="example1" placeholder="INGRESE EL CODIGO DE SOLICITUD">
+      <label for="example2" class="form-label">Nombre Cliente:</label>
+      <input type="email" class="form-control" id="example2" placeholder="INGRESE EL NOMBRE DEL CLIENTE">
+      <label for="example2" class="form-label">Estado Solicitud:</label>      
+        <select name="select" id="select1" class="form-control">
+          <option value="0">SELECCIONE</option>
+          <option value="1">PENDIENTE</option>
+          <option value="2">CONFIRMADO</option>
+          <option value="3">RECHAZADO</option>          
+        </select>
+      <button type="submit" class="btn btn-primary">BUSCAR</button>
+    </form>
+  </card>
+</div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12">
+    <card cardTitle="LISTADO DE RESERVAS">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>COD. SOLICITUD</th>
+            <th>CLIENTE</th>
+            <th>ACCESORIO</th>
+            <th>FECHA DE REGISTRO</th>
+            <th>COSTO TOTAL</th>
+            <th>ESTADO</th>
+            <th>OPCIONES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of tableData | paginate: { id: 'pager', itemsPerPage: pageSize, currentPage: pageNumber};let index = index">
+            <td>{{item.cod_solicitud}}</td>
+            <td>{{item.name_Client}}</td>
+            <td>{{item.name_product}}</td>
+            <td>{{item.date_reg}}</td>
+            <td>{{item.cost}}</td>
+            <td>
+              <span class="label label-info">{{item.state_Desc}}</span>
+            </td>
+            <td>
+              <button class="btn btn-success">CONFIRMAR</button>
+              <button class="btn btn-danger">RECHAZAR</button>
+              <button class="btn btn-info">EDITAR</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <form class="pagination-wrapper">
+        <div class="form-group pages">
+          <pagination-controls class="my-pagination" id="pager" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+            autoHide="true" previousLabel="Prev" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+            screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+        </div>
+        <div class="form-group options pages">
+          <div class="input-group input-group-sm">
+            <select class="form-control" name="pageChangedName" [(ngModel)]="pageSize" (ngModelChange)="loadData()">
+              <option>1</option>
+              <option>5</option>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+              <option>100</option>
+              <option>200</option>
+            </select>
+            <span class="input-group-addon addon-right">Per Page</span>
+          </div>
+        </div>
+      </form>
+    </card>
+  </div>
+</div>

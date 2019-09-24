@@ -1,0 +1,18 @@
+﻿################################################################################
+# Este archivo .gitignore ha sido creado automáticamente por Microsoft(R) Visual Studio.
+################################################################################
+
+*.dtbcache
+*.lock
+*.ide
+*.ide-shm
+*.ide-wal
+*.suo
+*.json
+*.config
+/.vs
+/Sleeping.Entities/obj
+/Sleeping.Entities/bin
+/Sleeping.Services/bin
+/Sleeping.Services/obj
+/Sleeping.WebServices.Build

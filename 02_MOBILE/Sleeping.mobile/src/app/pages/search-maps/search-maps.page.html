@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+        <ion-menu-button color="primary" menu="first"></ion-menu-button>
+    </ion-buttons>
+      <ion-title>BÚSQUEDA - MAPS</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button expand="full" 
+  style="margin-bottom: 15px;font-weight: bold;position:absolute;z-index: 1;right: 0;color: black;width: 11%;--background:white;margin: 11px;" 
+  class="register-button" (click)="setCurrentPosition()">
+  <ion-icon slot="icon-only" name="locate" style="position: absolute;"></ion-icon></ion-button>
+  <ion-button expand="full" 
+  style="margin-bottom: 15px;font-weight: bold;position:absolute;z-index: 1;right: 0;color: black;width: 11%;--background:white;margin: 11px;margin-top: 20%;" 
+  class="register-button" (click)="returnPosition()">
+  <ion-icon slot="icon-only" name="refresh" style="position: absolute;"></ion-icon></ion-button>
+  <agm-map  [latitude]="lat" [zoom]="zoom" [longitude]="lng">
+    
+    <agm-marker  [latitude]="lat" [longitude]="lng"></agm-marker>
+    <agm-marker
+        *ngFor="let marker of lstProviders"
+        [latitude]="marker.latitud"
+        [longitude]="marker.longitud"
+        [markerDraggable]="false"
+        [iconUrl]="marker.url"
+      >
+      <agm-snazzy-info-window [maxWidth]="200" [closeWhenOthersOpen]="true" backgroundColor="orange" [fontSize]="5">
+          <ng-template>
+            <span style="font-size: 11px;font-weight: bold;">{{marker.nombres+' '+marker.apellidos}}</span><br>
+            <span style="font-size: 11px;font-weight: bold;">{{marker.direccion}}</span><br>
+            <span style="font-size: 11px;font-weight: bold;">{{marker.login}}</span><br>
+            <span style="font-size: 11px;font-weight: bold;">{{marker.latitud+','+marker.longitud}}</span>
+          </ng-template>
+        </agm-snazzy-info-window>
+      </agm-marker>
+
+  </agm-map>
+</ion-content>

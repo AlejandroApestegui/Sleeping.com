@@ -1,0 +1,11 @@
+ion-toolbar{
+    --background:#03A54C;
+    --color:white;
+ }
+ ::ng-deep ion-tab-bar{
+    display: inherit !important;
+ }
+
+ .rdb-label{
+     color:red !important;
+ }
